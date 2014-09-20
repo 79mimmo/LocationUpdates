@@ -86,6 +86,7 @@ public class MainActivity extends FragmentActivity implements
     private TextView mProviderLabel;
     private TextView mProvider;
     private TextView mExtraInfo;
+    private GestoreGpx ggpx;
     // Handle to SharedPreferences for this app
     SharedPreferences mPrefs;
 
@@ -146,6 +147,8 @@ public class MainActivity extends FragmentActivity implements
          * handle callbacks.
          */
         mLocationClient = new LocationClient(this, this, this);
+        ggpx= new GestoreGpx();
+
 
     }
 
@@ -374,6 +377,7 @@ public class MainActivity extends FragmentActivity implements
 
         if (servicesConnected()) {
             startPeriodicUpdates();
+            ggpx.creaFileGpx();
         }
     }
 
@@ -468,6 +472,7 @@ public class MainActivity extends FragmentActivity implements
         mLatLng.setText(LocationUtils.getLatLng(this, location));
         mAccuracyState.setText(LocationUtils.getAccuracy(this,location));
         mProvider.setText(LocationUtils.getProvider(this,location));
+        ggpx.scriviPosizione(this,location);
     }
 
     /**
