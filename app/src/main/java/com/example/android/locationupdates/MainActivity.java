@@ -162,6 +162,7 @@ public class MainActivity extends FragmentActivity implements
         // If the client is connected
         if (mLocationClient.isConnected()) {
             stopPeriodicUpdates();
+            if (ggpx!=null&&ggpx.statoFile)ggpx.terminaFileGPX();
         }
 
         // After disconnect() is called, the client is considered "dead".
@@ -492,6 +493,8 @@ public class MainActivity extends FragmentActivity implements
     private void stopPeriodicUpdates() {
         mLocationClient.removeLocationUpdates(this);
         mConnectionState.setText(R.string.location_updates_stopped);
+        if (ggpx!=null&&ggpx.statoFile)ggpx.terminaFileGPX();
+
     }
 
     /**

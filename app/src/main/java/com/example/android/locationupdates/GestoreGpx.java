@@ -24,6 +24,7 @@ public class GestoreGpx {
     File fileGpx;
     FileOutputStream fos;
     OutputStreamWriter osw;
+    boolean statoFile=false;
 
     public GestoreGpx(){
         //Test se presente external Storage:
@@ -52,8 +53,10 @@ public class GestoreGpx {
             fileGpx.createNewFile();
             fos = new FileOutputStream(fileGpx);
             osw= new OutputStreamWriter(fos);
+            statoFile=true;
             osw.append("\n" +
-                    "<gpx version=\"1.0\" creator=\"MyGPSlog - a cura di Mimmo Cuomo\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.topografix.com/GPX/1/0\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd\">"+"\n"+"<time>"+dataUTC+"</time>\n");
+                    "<gpx version=\"1.0\" creator=\"MyGPSlog - a cura di Mimmo Cuomo\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.topografix.com/GPX/1/0\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd\">"+"\n"+
+                    "<time>"+dataUTC+"</time>\n\t<trk>\n\t\t<trkseg>");
             osw.flush();
             osw.close();
 
@@ -83,6 +86,29 @@ public class GestoreGpx {
             e.printStackTrace();
         }
 
+        return esito;
+    }
+    public boolean terminaFileGPX(){
+        boolean esito=false;
+        try {
+            fos = new FileOutputStream(fileGpx, true);
+
+            osw = new OutputStreamWriter(fos);
+
+            osw.append("\n" +
+                       "\t\t<trkseg>" +
+                       "\n\t<trk>"+
+                       "\n</gpx>"
+                    );
+            osw.flush();
+            osw.close();
+            statoFile=false;
+            esito = true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return esito;
     }
     /* Checks if external storage is available for read and write */
