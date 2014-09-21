@@ -75,8 +75,30 @@ public class GestoreGpx {
             fos = new FileOutputStream(fileGpx, true);
 
             osw= new OutputStreamWriter(fos);
-
-            osw.append("\n"+LocationUtils.getLatLng(contesto, location));
+            //inizia la costruzione del trkpt
+            osw.append("\n\t\t\t<trkpt ");//apertura tag
+            osw.append("lat=\""+LocationUtils.getLat(contesto, location)+" ");
+            osw.append("lon=\""+LocationUtils.getLong(contesto, location)+">");
+                osw.append("\n\t\t\t\t<ele>");
+                osw.append(LocationUtils.getAltezza(contesto, location));
+                osw.append("</ele>");
+                osw.append("\n\t\t\t\t<time>");
+                osw.append(LocationUtils.getTime(contesto, location));
+                osw.append("</time>");
+                osw.append("\n\t\t\t\t<course>");
+                osw.append(LocationUtils.getBearing(contesto, location));
+                osw.append("</course>");
+                osw.append("\n\t\t\t\t<speed>");
+                osw.append(LocationUtils.getSpeed(contesto, location));
+                osw.append("</speed>");
+                osw.append("\n\t\t\t\t<src>");
+                osw.append(LocationUtils.getProvider(contesto, location));
+                osw.append("</src>");
+                osw.append("\n\t\t\t\t<acc>");
+                osw.append(LocationUtils.getAccuracy(contesto, location));
+                osw.append("</acc>");
+            osw.append("\n\t\t\t</trkpt>");//chiusura tag
+            //fine trkpt
             osw.flush();
             osw.close();
             esito=true;

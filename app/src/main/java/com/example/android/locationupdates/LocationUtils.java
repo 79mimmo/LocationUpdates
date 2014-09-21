@@ -21,6 +21,9 @@ import android.location.Location;
 
 import com.example.android.locationupdates.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Defines app-wide constants and utilities
  */
@@ -90,7 +93,7 @@ public final class LocationUtils {
         }
     }
 
-    public static String getProvider(Context context, Location currentLocation){
+    public static String getProvider(Context context, Location currentLocation) {
         // If the location is valid
         if (currentLocation != null) {
 
@@ -101,8 +104,84 @@ public final class LocationUtils {
             // Otherwise, return the empty string
             return context.getString(R.string.provider_unknown);
         }
+    }
 
+    public static String getLat(Context context, Location currentLocation){
+        // If the location is valid
+        if (currentLocation != null) {
+            // Return the latitude and longitude as strings
+            Double latitudine=currentLocation.getLatitude();
+            return latitudine.toString();
+        } else {
+            // Otherwise, return the empty string
+            return context.getString(R.string.unknown);
+        }
+    }
 
+    public static String getLong(Context context, Location currentLocation){
+        // If the location is valid
+        if (currentLocation != null) {
+            // Return the latitude and longitude as strings
+            Double longitudine=currentLocation.getLongitude();
+            return longitudine.toString();
+        } else {
+            // Otherwise, return the empty string
+            return context.getString(R.string.unknown);
+        }
+    }
+
+    public static String getTime(Context context, Location currentLocation){
+        // If the location is valid
+        if (currentLocation != null) {
+            // Return the latitude and longitude as strings
+            Long timeStamp=currentLocation.getTime();
+            Date dataCampione=new Date(timeStamp);
+
+            SimpleDateFormat sdfutc=new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'");
+            String dataUTC=sdfutc.format(dataCampione);
+            return dataUTC.toString();
+        } else {
+            // Otherwise, return the empty string
+            return context.getString(R.string.unknown);
+        }
+    }
+
+    public static String getSpeed(Context context, Location currentLocation){
+        // If the location is valid
+        if (currentLocation != null&& currentLocation.hasSpeed()) {
+            // Return the latitude and longitude as strings
+            Float velocità=currentLocation.getSpeed();
+            return velocità.toString();
+        } else {
+            // Otherwise, return the empty string
+            return context.getString(R.string.unknown);
+        }
+    }
+
+    public static String getBearing(Context context, Location currentLocation){
+        // If the location is valid
+        if (currentLocation != null&&currentLocation.hasBearing()) {
+            // Return the latitude and longitude as strings
+            Float bearing=currentLocation.getBearing();
+            return bearing.toString();
+        } else {
+            // Otherwise, return the empty string
+            return context.getString(R.string.unknown);
+        }
+    }
+
+    public static String getAltezza(Context context, Location currentLocation){
+        // If the location is valid
+        if (currentLocation != null&&currentLocation.hasAltitude()) {
+
+            // Return the latitude and longitude as strings
+            Double altezza=currentLocation.getAltitude();
+            return altezza.toString();
+        } else {
+
+            // Otherwise, return the empty string
+            return context.getString(R.string.unknown);
+        }
     }
     public static String getAccuracy(Context context, Location currentLocation){
         // If the location is valid
